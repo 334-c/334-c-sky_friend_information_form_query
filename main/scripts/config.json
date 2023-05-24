@@ -1,0 +1,4 @@
+{
+    "serverUrl": "http://localhost:3341/sky/commit",
+    "decodeServerUrl": "http://localhost:3340/upconf"
+}

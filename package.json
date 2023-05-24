@@ -1,0 +1,29 @@
+{
+  "name": "sky_friend_information_form_query",
+  "version": "1.0.0",
+  "description": "光遇交友表单查询",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serv": "node  main\\app.js",
+    "app": "node main\\app.js"
+  },
+  "author": "luoluo334",
+  "license": "LGPL-3.0",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "clear-module": "^4.1.2",
+    "connect-timeout": "^1.9.0",
+    "cookie-parser": "^1.4.6",
+    "crypto-js": "^4.1.1",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "express-session": "^1.17.3",
+    "fs": "^0.0.1-security",
+    "glob": "^10.2.3",
+    "mysql": "^2.18.1",
+    "nedb-session-store": "^1.1.2",
+    "node-xlsx": "^0.21.2",
+    "typeorm": "^0.3.16"
+  }
+}
