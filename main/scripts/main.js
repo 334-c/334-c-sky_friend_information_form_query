@@ -21,22 +21,23 @@ console.log(key);
 // 该密钥为联系方式加密生成key的密钥
 let authKey = crypto.createRandomKey(32, readme);
 let idKey = crypto.createRandomKey(32, "QWERTYUIOPASDFGHJKLZXCVBNM123456789");
-data.sort((a,b)=>{
-    try{
-        return (new Date(b.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf()) 
-            - (new Date(a.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf())
-    }catch(err){
-        console.log("排序失败！", a, b)
-        return 0;
-    }
-});
-console.log(data)
+// data.sort((b, a)=>{
+//     try{
+//         return (new Date(a.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf()) 
+//             - (new Date(b.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf())
+//     }catch(err){
+//         console.log("排序失败！", a, b)
+//         return 0;
+//     }
+// });
+// console.log(data)
 data.forEach((e, i)=>{
     let user = {
         id: i,
         key: crypto.encode(idKey, e.contact),
         data: userInfo(e),
-        sentences: [e.introduction, e.request].join("\n")
+        sentences: [e.introduction, e.request].join("\n"),
+        time: new Date(e.updateTime.replace(/[年月]/g, "-").replace("日", ""))
     }
     // 仅允许需求和自介为明文
     user.data = crypto.encode(key, user.data);
@@ -48,7 +49,6 @@ function userInfo(e){
     // TODO 在这里删除一些数据
     return JSON.stringify(e)
 }
-
 let commitData = {
     key: key,           // 混淆密钥，需要发到副服务器
     idKey: idKey,       // 生成id的密钥，需要发到服务器

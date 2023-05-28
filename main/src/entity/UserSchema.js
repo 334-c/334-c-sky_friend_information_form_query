@@ -36,6 +36,11 @@ const UserSchema = new EntitySchema({
       nullable: true,
       comment: "明文数据",
     },
+    time: {
+      type: "timestamp",
+      createDate: true,
+      comment: "时间",
+    },
     isDelete: {
       type: Boolean,
       default: false,

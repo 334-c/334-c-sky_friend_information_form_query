@@ -69,8 +69,9 @@ const services = {...service, hot(){return this}, ...createServiceHint(User, {
             query.orWhere('user.sentences like :' + key, {[key]: `%${sentence}%`});
         });
 
-        let total = await query.getCount();
-        query.skip(pageSize * (pageNum - 1)).take(pageSize);
+        let total = await query.getCount();                     // 获取总数
+        query.skip(pageSize * (pageNum - 1)).take(pageSize);    // 分页
+        query.addOrderBy("user.time", "DESC");                  // 倒序
 
         // 修改异常信息进度
         req.errorMessage = "查询异常";
