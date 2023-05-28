@@ -32,7 +32,7 @@ const conf = {
 const services = {...service, hot(){return this}, ...createServiceHint(User, {
     /** 查询数据接口 */
     async find({req, res, params}) {
-        /** @type {T.TUser & T.TPage & T.TWords} */
+        /** @type {T.TUser & T.TPage & T.TWords & {order: "DESC"}} */
         let p = params;
         let pageNum = paramUtils.limitNumber(p.pageNum, 1);
         let pageSize = paramUtils.limitNumber(p.pageSize, 1, conf.pageSizeMax);
@@ -71,7 +71,7 @@ const services = {...service, hot(){return this}, ...createServiceHint(User, {
 
         let total = await query.getCount();                     // 获取总数
         query.skip(pageSize * (pageNum - 1)).take(pageSize);    // 分页
-        query.addOrderBy("user.time", "DESC");                  // 倒序
+        query.addOrderBy("user.time", p.order || "DESC");                  // 倒序
 
         // 修改异常信息进度
         req.errorMessage = "查询异常";
