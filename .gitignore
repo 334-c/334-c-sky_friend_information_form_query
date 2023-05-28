@@ -5,4 +5,4 @@
 main/scripts/data.json
 main/scripts/config copy.json
 main/scripts/附件下载_（收集结果）.zip
-main/scripts/（收集结果）.xlsx
+main/scripts/*.xlsx

@@ -33,6 +33,15 @@ module.exports = (path)=>{
     // 该密钥为联系方式加密生成key的密钥
     let authKey = crypto.createRandomKey(32, readme);
     let idKey = crypto.createRandomKey(32, "QWERTYUIOPASDFGHJKLZXCVBNM123456789");
+    data.sort((a,b)=>{
+        try{
+            return (new Date(b.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf()) 
+                - (new Date(a.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf())
+        }catch(err){
+            console.log("排序失败！", a, b)
+            return 0;
+        }
+    });
     data.forEach((e, i)=>{
         let user = {
             id: i,

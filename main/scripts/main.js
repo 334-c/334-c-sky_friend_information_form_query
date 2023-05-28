@@ -21,6 +21,16 @@ console.log(key);
 // 该密钥为联系方式加密生成key的密钥
 let authKey = crypto.createRandomKey(32, readme);
 let idKey = crypto.createRandomKey(32, "QWERTYUIOPASDFGHJKLZXCVBNM123456789");
+data.sort((a,b)=>{
+    try{
+        return (new Date(b.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf()) 
+            - (new Date(a.updateTime.replace(/[年月]/g, "-").replace("日", "")).valueOf())
+    }catch(err){
+        console.log("排序失败！", a, b)
+        return 0;
+    }
+});
+console.log(data)
 data.forEach((e, i)=>{
     let user = {
         id: i,
@@ -63,28 +73,30 @@ let defConfig = {
         "授权id"
     ]
 }
-axios.post(config.decodeServerUrl, {
-    key: commitData.key,
-    authKey: commitData.authKey,
-    updateTime: commitData.updateTime,
-    ids: commitData.ids
-}).then(resp=>{
-    console.log("提交密钥结束!", resp.data);
-}).catch(err=>{
-    console.log("提交密钥错误!", err);
-});
+if(false){
+    axios.post(config.decodeServerUrl, {
+        key: commitData.key,
+        authKey: commitData.authKey,
+        updateTime: commitData.updateTime,
+        ids: commitData.ids
+    }).then(resp=>{
+        console.log("提交密钥结束!", resp.data);
+    }).catch(err=>{
+        console.log("提交密钥错误!", err);
+    });
 
 
-// console.log(commitData.data)
-// 提交数据到服务器
-axios.post(config.serverUrl, {
-    authKey: commitData.authKey,
-    idKey: commitData.idKey,
-    data: commitData.data
-}).then(resp=>{
-    console.log("提交数据结束!", resp.data);
-    delete commitData.data;
-    console.log(commitData)
-}).catch(err=>{
-    console.log("提交数据错误!", err);
-});
+    // console.log(commitData.data)
+    // 提交数据到服务器
+    axios.post(config.serverUrl, {
+        authKey: commitData.authKey,
+        idKey: commitData.idKey,
+        data: commitData.data
+    }).then(resp=>{
+        console.log("提交数据结束!", resp.data);
+        delete commitData.data;
+        console.log(commitData)
+    }).catch(err=>{
+        console.log("提交数据错误!", err);
+    });
+}
