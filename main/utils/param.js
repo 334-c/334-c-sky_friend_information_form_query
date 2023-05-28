@@ -79,6 +79,21 @@ const local = {
             } else delete obj[key];
         }
         return obj
+    },
+    /**
+     * 拼接uri
+     * @param  {...String} uris 
+     * @returns {String} 完整的链接
+     */
+    appendUri(...uris) {
+        let re = [];
+        for (let uri of uris) {
+            while (uri.endsWith("/")) {
+                uri = uri.substring(0, uri.length-1)
+            }
+            re.push(uri)
+        }
+        return re.join("/");
     }
 }
 module.exports = local;

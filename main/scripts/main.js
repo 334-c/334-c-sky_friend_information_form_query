@@ -1,4 +1,4 @@
-// require("./anyXlsx");
+require("./anyXlsx");
 
 const axios = require("axios"),
     crypto = require("./crypto"),

@@ -1,6 +1,11 @@
 {
     "port": 3341,
     "faultErrMsgStack": true,
+    "uploadForm": {
+        "multiples": true,
+        "uploadDir": "uploads/",
+        "keepExtensions": true
+    },
     "typeormDatabaseConfig": {
         "type": "mysql",
         "host": "localhost",

@@ -6,30 +6,33 @@ const {
     utils
 } = require("./baseService")("User");
 const {
-    createServiceHint, paramUtils, axios, getServiceId, container, getRepositoryId
+    createServiceHint, paramUtils, axios, getServiceId, container, getRepositoryId, getServiceFun
 } = utils;
-const T = require("./TYPEDEF");
-/** @type {import("./TYPEDEF").TUser} */
+const { T } = require("./TYPEDEF");
+
+/** @type {T.CUser} */
 const User = Class;
+
+/** @type {T.TRepository} */
+const keyToIdRepository = container.get(getRepositoryId("KeyToId"));
+
+/** @type {T.TCodeMapService} */
+let codeMapServiceHint;
+const getCodeMapService = getServiceFun("CodeMap", codeMapServiceHint);
+
+/** @type {T.TCodeMapService} */
+let systemServiceHint;
+const getSystemService = getServiceFun("System", systemServiceHint);
+
 const conf = {
     ...{
         pageSizeMax: 50
     }, ...config
 }
-/** @type {import("./TYPEDEF").TCodeMapService} */
-var codeMapService;
-// const codeMapService = container.get(getServiceId("CodeMap"));
-try{
-    codeMapService = container.get(getServiceId("CodeMap"));
-}catch(err){
-}
-/** @type {import("./TYPEDEF").TRepository} */
-const keyToIdRepository = container.get(getRepositoryId("KeyToId"));
 const services = {...service, hot(){return this}, ...createServiceHint(User, {
     /** 查询数据接口 */
     async find({req, res, params}) {
-        // /** @type {T.TUser & T.TPage & T.TWords} */
-        /** @type {import("./TYPEDEF").TUser & import("./TYPEDEF").TPage & import("./TYPEDEF").TWords} */
+        /** @type {T.TUser & T.TPage & T.TWords} */
         let p = params;
         let pageNum = paramUtils.limitNumber(p.pageNum, 1);
         let pageSize = paramUtils.limitNumber(p.pageSize, 1, conf.pageSizeMax);
@@ -75,8 +78,8 @@ const services = {...service, hot(){return this}, ...createServiceHint(User, {
         // 清除 user对象中的 sentences 字段
         re.forEach(user => delete user.sentences);
         // 提交数据到解密，id是当前服务器id，需要保存到数据库中
-        let id = (await codeMapService.getByName({params: {name: "服务器id"}}))[0].code;
-        let url = (await codeMapService.getByName({params: {name: "辅助服务器地址"}}))[0].code;
+        let id = (await getCodeMapService().getByName({params: {name: "服务器id"}}))[0].code;
+        let url = (await getCodeMapService().getByName({params: {name: "辅助服务器地址"}}))[0].code;
         url += url.endsWith("/") ? "decode" : "/decode";
         // 通过字典表查询当前id和服务器地址
         let resp = await axios.post(url, {data: re, id});
@@ -100,12 +103,7 @@ const services = {...service, hot(){return this}, ...createServiceHint(User, {
         });
         
         req.errorMessage = "提交失败";
-        // 查询服务器地址
-        let url = (await codeMapService.getByName({params: {name: "辅助服务器地址"}}))[0].code;
-        url += url.endsWith("/") ? "auth" : "/auth";
-        // 查询权限
-        let { data: auth } = await axios.post(url, {authKey});
-        if(auth != true) throw Error ("鉴权失败");
+        await getSystemService().auth({params});
 
         let re;
         if(0 < userList.length) {

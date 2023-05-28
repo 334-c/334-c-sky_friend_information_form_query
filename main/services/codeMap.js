@@ -8,7 +8,8 @@ const {
 const {
     createServiceHint
 } = utils;
-/** @type {import("./TYPEDEF").TCodeMap} */
+const { T } = require("./TYPEDEF");
+/** @type {T.CCodeMap} */
 const CodeMap = Class;
 
 const services = {...service, ...createServiceHint(CodeMap, {

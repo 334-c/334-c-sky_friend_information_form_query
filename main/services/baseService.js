@@ -1,5 +1,5 @@
 const utils = require("../utils");
-const T = require("./TYPEDEF");
+const { T } = require("./TYPEDEF");
 
 module.exports = (Class)=>{
     const config = {
@@ -52,6 +52,6 @@ module.exports = (Class)=>{
         config,
         Class,
         utils,
-        T
+        T   // 这里导出的提示信息无效
     };
 };

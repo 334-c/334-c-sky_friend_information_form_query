@@ -114,10 +114,10 @@ function configExpress({app, result, resultCode, logger, express, path}) {
     
     // 超时5分钟
     app.use(timeout(5 * 60 * 1000));
-    // form 数据解析
-    app.use(express.urlencoded({ extended: true /* 是否转换成对象 */}));
     // json 数据解析
     app.use(express.json({}));
+    // form 数据解析
+    app.use(express.urlencoded({ extended: true /* 是否转换成对象 */}));
 
     /**
      * 保存用户最后一次访问时间
@@ -133,5 +133,6 @@ function configExpress({app, result, resultCode, logger, express, path}) {
 
     logger.log(path.join(__dirname, "../../res"))
     // 静态资源
-    app.use('/static', express.static(path.join(__dirname, "../")));
+    console.log("++>", path.join(__dirname, "../"))
+    app.use('/static', express.static(path.join(__dirname, "../src/view")));
 }

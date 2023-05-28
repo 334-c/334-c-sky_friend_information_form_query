@@ -3,6 +3,7 @@ const {
 } = require("../utils");
 
 /**
+ * 这只是一个示例，用于提示信息
  * @param {import("../services/codeMap")} service 服务
  */
 module.exports = (service)=> createService({

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>文件上传</title>
+  <style>
+    div{
+        text-align: center;
+        margin: 2%;
+    }
+    .submit{
+        width: 15%;
+        height: 40px;
+    }
+</style>
+</head>
+<body>
+    <div>
+    <form action="../system/updateData?upload=once" id="form" method="post" enctype="multipart/form-data">
+        <label for="file">选择文件：</label>
+        <input type="file" id="file" name="myFile">
+        <br>
+        <br>
+        <label for="filename">自定义文件名：</label>
+        <input type="text" id="authKey" oninput="upUir(this)"><br><br>
+        <input type="submit" value="上传">
+    </form>
+    </div>
+</body>
+</html>
+<script>
+    var form = document.querySelector("#form");
+    function upUir(e){
+        form.setAttribute("action", "../system/updateData?authKey=" + e.value)
+    }
+</script>

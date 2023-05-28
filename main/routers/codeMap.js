@@ -1,9 +1,8 @@
 const { 
-    createService, hotRequireSubjoin, container, getServiceId
+    createService, container, getServiceId
 } = require("../utils");
 /** @type {import("../services/codeMap")} */
 const codeMapService = container.get(getServiceId("CodeMap"));
-// const codeMapService = hotRequireSubjoin.import("../services/codeMap");
 
 module.exports = {
     ...require("./baseRouter")(codeMapService),

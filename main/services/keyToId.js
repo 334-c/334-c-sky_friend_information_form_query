@@ -8,7 +8,8 @@ const {
 const {
     createServiceHint
 } = utils;
-/** @type {import("./TYPEDEF").TKeyToId} */
+const { T } = require("./TYPEDEF");
+/** @type {T.CKeyToId} */
 const KeyToId = Class;
 
 const services = {...service, ...createServiceHint(KeyToId, {

@@ -1,24 +1,60 @@
 let xlsx = require('node-xlsx');
 let fs = require('fs');
+let path = require('path');
+const anyPath = (filename)=>path.join(process.cwd().replace("\\main\\scripts", ""), "main/scripts/", filename); 
 const conf = {
-    filepath: "./（收集结果）.xlsx"
+    filepath: anyPath("（收集结果）.xlsx")
 }
+console.log(conf.filepath)
 // 模板
 const dataFormatTemplate = getDataMappingTemplate()
 // 提示信息
 const { formData } = Bodys();
-const data = readXlsx(conf.filepath);
-// console.log(data)
-let re = [];
-data.forEach(e=>{
-    if(typeof e == "object") {
-        re.push(analyData(e, dataFormatTemplate));
+try{ main() }catch(err){};
+module.exports = main;
+/**
+ * 主程序
+ * @param {String} filepath 文件路径
+ * @param {Boolean} hideLog 隐藏日志
+ * @returns {{
+        "updateTime": "2023年5月8日 16:09",
+        "language": "中文",
+        "agereement": true,
+        "server": [
+            1
+        ],
+        "auth": [],
+        "wantType": [
+            "固玩",
+            "监护",
+            "崽崽",
+            "对象（特指可奔现）",
+            "CP（特指仅游戏cp）",
+            "普友"
+        ],
+        "contact": [],
+        "age": "16",
+        "gender": 1,
+        "introduction": "牛波一",
+        "request": "牛波二",
+        "pictures": []
+    }} 数据
+ */
+function main(filepath, api){
+    const data = readXlsx(filepath || conf.filepath);
+    // console.log(data)
+    let re = [];
+    data.forEach(e=>{
+        if(typeof e == "object") {
+            re.push(analyData(e, dataFormatTemplate));
+        }
+    });
+    if(!api) {
+        console.log(re);
+        fs.writeFileSync(anyPath("data.json"), JSON.stringify(re, " ", 4));
     }
-});
-
-console.log(re)
-fs.writeFileSync("./data.json", JSON.stringify(re, " ", 4));
-
+    return re;
+}
 
 /**
  * 获取数据映射模板
