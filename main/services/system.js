@@ -15,18 +15,15 @@ const services = {hot(){return this}, name: "System",  ...createServiceHint({},{
     async updateData({req, res, params}) {
         req.errorMessage = "验证权限中...";
         // 验证权限 
-        console.log(req.query)
-        console.log(req.body)
         await this.auth({params});
-        return "权限验证成功";
+        
         // 下载文件
         req.errorMessage = "上传文件中...";
-
-          let re = await parseFormFile(req);
-          let pathList = [];
-          Object.keys(re.files).forEach(name=>{
-            pathList.push(re.files[name].filepath);
-          });
+        let re = await parseFormFile(req);
+        let pathList = [];
+        Object.keys(re.files).forEach(name=>{
+          pathList.push(re.files[name].filepath);
+        });
 
         // 解析文件
         req.errorMessage = "解析数据中...";

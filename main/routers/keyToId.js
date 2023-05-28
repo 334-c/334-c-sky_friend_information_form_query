@@ -5,7 +5,7 @@ const {
 const keyToIdService = container.get(getServiceId("KeyToId"));
 
 module.exports = {
-    ...require("./baseRouter")(keyToIdService),
+    // ...require("./baseRouter")(keyToIdService),
     ...createService({
         // 可以在这里继续编写路由...
     })

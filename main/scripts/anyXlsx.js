@@ -5,12 +5,17 @@ const anyPath = (filename)=>path.join(process.cwd().replace("\\main\\scripts", "
 const conf = {
     filepath: anyPath("（收集结果）.xlsx")
 }
-console.log(conf.filepath)
+
 // 模板
 const dataFormatTemplate = getDataMappingTemplate()
 // 提示信息
 const { formData } = Bodys();
-try{ main() }catch(err){};
+if(false) {
+    try{ 
+        console.log(conf.filepath)
+        main() 
+    }catch(err){};
+}
 module.exports = main;
 /**
  * 主程序

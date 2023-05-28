@@ -131,8 +131,6 @@ function configExpress({app, result, resultCode, logger, express, path}) {
         }
     });
 
-    logger.log(path.join(__dirname, "../../res"))
     // 静态资源
-    console.log("++>", path.join(__dirname, "../"))
     app.use('/static', express.static(path.join(__dirname, "../src/view")));
 }
